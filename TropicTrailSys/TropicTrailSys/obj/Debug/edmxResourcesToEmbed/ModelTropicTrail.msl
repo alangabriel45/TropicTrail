@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TropicTrailModelStoreContainer" CdmEntityContainer="TropicTrailEntities">
+    <EntitySetMapping Name="Reservation">
+      <EntityTypeMapping TypeName="TropicTrailModel.Reservation">
+        <MappingFragment StoreEntitySet="Reservation">
+          <ScalarProperty Name="reservation_Id" ColumnName="reservation_Id" />
+          <ScalarProperty Name="date_In" ColumnName="date_In" />
+          <ScalarProperty Name="date_Out" ColumnName="date_Out" />
+          <ScalarProperty Name="service_Id" ColumnName="service_Id" />
+          <ScalarProperty Name="booked_By" ColumnName="booked_By" />
+          <ScalarProperty Name="payment" ColumnName="payment" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Role">
+      <EntityTypeMapping TypeName="TropicTrailModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="roleId" ColumnName="roleId" />
+          <ScalarProperty Name="roleName" ColumnName="roleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Services">
+      <EntityTypeMapping TypeName="TropicTrailModel.Services">
+        <MappingFragment StoreEntitySet="Services">
+          <ScalarProperty Name="service_Id" ColumnName="service_Id" />
+          <ScalarProperty Name="tourType_Id" ColumnName="tourType_Id" />
+          <ScalarProperty Name="service_Description" ColumnName="service_Description" />
+          <ScalarProperty Name="max_Guest" ColumnName="max_Guest" />
+          <ScalarProperty Name="service_Price" ColumnName="service_Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tour_Type">
+      <EntityTypeMapping TypeName="TropicTrailModel.Tour_Type">
+        <MappingFragment StoreEntitySet="Tour_Type">
+          <ScalarProperty Name="tbType_Id" ColumnName="tbType_Id" />
+          <ScalarProperty Name="tbType_Name" ColumnName="tbType_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="TropicTrailModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="userFName" ColumnName="userFName" />
+          <ScalarProperty Name="userLName" ColumnName="userLName" />
+          <ScalarProperty Name="userAddress" ColumnName="userAddress" />
+          <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+          <ScalarProperty Name="userPhone" ColumnName="userPhone" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="userPass" ColumnName="userPass" />
+          <ScalarProperty Name="userRole" ColumnName="userRole" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRole">
+      <EntityTypeMapping TypeName="TropicTrailModel.UserRole">
+        <MappingFragment StoreEntitySet="UserRole">
+          <ScalarProperty Name="userRoleId" ColumnName="userRoleId" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="userRole1" ColumnName="userRole" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

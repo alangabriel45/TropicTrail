@@ -43,6 +43,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -76,6 +80,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -117,60 +124,65 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Contents\css\ajax-loader.gif" />
-    <Content Include="Contents\css\animate.css" />
-    <Content Include="Contents\css\bootsnav.css" />
-    <Content Include="Contents\css\bootstrap.min.css" />
-    <Content Include="Contents\css\flaticon.css" />
-    <Content Include="Contents\css\font-awesome.min.css" />
-    <Content Include="Contents\css\fonts\slick.svg" />
-    <Content Include="Contents\css\linearicons.css" />
-    <Content Include="Contents\css\responsive.css" />
-    <Content Include="Contents\css\slick-theme.css" />
-    <Content Include="Contents\css\slick.css" />
-    <Content Include="Contents\css\style.css" />
-    <Content Include="Contents\fonts\Flaticon.svg" />
-    <Content Include="Contents\fonts\fontawesome-webfont.svg" />
-    <Content Include="Contents\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Contents\fonts\Linearicons-Free.svg" />
-    <Content Include="Contents\images\blog\b1.jpg" />
-    <Content Include="Contents\images\blog\b2.jpg" />
-    <Content Include="Contents\images\blog\b3.jpg" />
-    <Content Include="Contents\images\clients\c1.png" />
-    <Content Include="Contents\images\clients\c2.png" />
-    <Content Include="Contents\images\clients\c3.png" />
-    <Content Include="Contents\images\clients\c4.png" />
-    <Content Include="Contents\images\counter\counter-banner.jpg" />
-    <Content Include="Contents\images\explore\e1.jpg" />
-    <Content Include="Contents\images\explore\e2.jpg" />
-    <Content Include="Contents\images\explore\e3.jpg" />
-    <Content Include="Contents\images\explore\e4.jpg" />
-    <Content Include="Contents\images\explore\e5.jpg" />
-    <Content Include="Contents\images\explore\e6.jpg" />
-    <Content Include="Contents\images\explore\person.png" />
-    <Content Include="Contents\images\welcome-hero\banner.jpg" />
-    <Content Include="Contents\img\controls.png" />
-    <Content Include="Contents\js\bootsnav.js" />
-    <Content Include="Contents\js\bootstrap.min.js" />
-    <Content Include="Contents\js\custom.js" />
-    <Content Include="Contents\js\feather.min.js" />
-    <Content Include="Contents\js\jquery.counterup.min.js" />
-    <Content Include="Contents\js\jquery.js" />
-    <Content Include="Contents\js\slick.min.js" />
-    <Content Include="Contents\js\waypoints.min.js" />
-    <Content Include="Contents\logo\favicon.png" />
+    <Content Include="Contents\Style.css" />
     <Content Include="Global.asax" />
+    <Content Include="ModelTropicTrail.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelTropicTrail.edmx</DependentUpon>
+      <LastGenOutput>ModelTropicTrail.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModelTropicTrail.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelTropicTrail.edmx</DependentUpon>
+      <LastGenOutput>ModelTropicTrail.cs</LastGenOutput>
+    </Content>
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Contracts\IBaseRepository.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="ModelTropicTrail.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelTropicTrail.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelTropicTrail.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelTropicTrail.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelTropicTrail.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelTropicTrail.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\BaseRepository.cs" />
+    <Compile Include="Reservation.cs">
+      <DependentUpon>ModelTropicTrail.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Role.cs">
+      <DependentUpon>ModelTropicTrail.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Services.cs">
+      <DependentUpon>ModelTropicTrail.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tour_Type.cs">
+      <DependentUpon>ModelTropicTrail.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>ModelTropicTrail.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserRole.cs">
+      <DependentUpon>ModelTropicTrail.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -180,25 +192,15 @@
     </Content>
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Contents\css\fonts\slick.eot" />
-    <Content Include="Contents\css\fonts\slick.ttf" />
-    <Content Include="Contents\css\fonts\slick.woff" />
-    <Content Include="Contents\fonts\Flaticon.eot" />
-    <Content Include="Contents\fonts\Flaticon.ttf" />
-    <Content Include="Contents\fonts\Flaticon.woff" />
-    <Content Include="Contents\fonts\fontawesome-webfont.eot" />
-    <Content Include="Contents\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Contents\fonts\fontawesome-webfont.woff" />
-    <Content Include="Contents\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Contents\fonts\FontAwesome.otf" />
-    <Content Include="Contents\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Contents\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Contents\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Contents\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Contents\fonts\Linearicons-Free.eot" />
-    <Content Include="Contents\fonts\Linearicons-Free.ttf" />
-    <Content Include="Contents\fonts\Linearicons-Free.woff" />
-    <Content Include="Contents\fonts\Linearicons-Free.woff2" />
+    <EntityDeploy Include="ModelTropicTrail.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelTropicTrail.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="ModelTropicTrail.edmx.diagram">
+      <DependentUpon>ModelTropicTrail.edmx</DependentUpon>
+    </Content>
+    <Content Include="Views\Home\Create.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -209,6 +211,10 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Base\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

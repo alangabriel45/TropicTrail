@@ -44,3 +44,5 @@ C:\Users\dosad\Desktop\TropicTrail\TropicTrailSys\TropicTrailSys\bin\System.Web.
 C:\Users\dosad\Desktop\TropicTrail\TropicTrailSys\TropicTrailSys\obj\Debug\TropicTrailSys.csprojResolveAssemblyReference.cache
 C:\Users\dosad\Desktop\TropicTrail\TropicTrailSys\TropicTrailSys\obj\Debug\TropicTrailSys.dll
 C:\Users\dosad\Desktop\TropicTrail\TropicTrailSys\TropicTrailSys\obj\Debug\TropicTrailSys.pdb
+C:\Users\dosad\Desktop\TropicTrail\TropicTrailSys\TropicTrailSys\bin\EntityFramework.dll
+C:\Users\dosad\Desktop\TropicTrail\TropicTrailSys\TropicTrailSys\bin\EntityFramework.xml
