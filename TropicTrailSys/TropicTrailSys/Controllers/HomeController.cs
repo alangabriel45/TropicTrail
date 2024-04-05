@@ -22,6 +22,11 @@ namespace TropicTrailSys.Controllers
                 return RedirectToAction("Index");
             return View();
         }
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login");
+        }
         [AllowAnonymous]
         [HttpPost]
         public ActionResult Login(User u)
@@ -48,6 +53,30 @@ namespace TropicTrailSys.Controllers
             _userRepo.Create(u);
             TempData["Msg"] = $"User {u.userName} Created Successfully!";
             return RedirectToAction("Index");
-        }       
+        }
+        [AllowAnonymous]
+        public ActionResult HotDeals()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        public ActionResult Offers()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        public ActionResult Features()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        public ActionResult ContactUs()
+        {
+            return View();
+        }
+        public ActionResult BookNow()
+        {
+            return View();
+        }
     }
 }

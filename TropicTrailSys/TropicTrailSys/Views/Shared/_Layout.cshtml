@@ -11,17 +11,28 @@
 <body>
     <header class="header_menu">
         <nav class="navbar">
-            <div class="logo"><a href="#">TropicTrail</a></div>
+            <div class="logo"><a href="~/Home/Index">TropicTrail</a></div>
             <ul class="links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Hottest deal!</a></li>
-                <li><a href="#">Offers</a></li>
-                <li><a href="#">Features</a></li>
-                <li><a href="#">Contact Us</a></li>
+                <li><a href="~/Home/Index">Home</a></li>
+                <li><a href="~/Home/HotDeals">Hottest deal!</a></li>
+                <li><a href="~/Home/Offers">Offers</a></li>
+                <li><a href="~/Home/Features">Features</a></li>
+                <li><a href="~/Home/ContactUs">Contact Us</a></li>
             </ul>
             <div class="btns">
-                @Html.ActionLink("Login", "Login", "Home", null, new { @class = "btnLogin" })
-                @Html.ActionLink("Sign-Up", "Create", "Home", null, new { @class = "btnSignUp" })
+                <ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @Html.ActionLink("Book Now", "BookNow", "Home", null, new { @class = "btnLogout" })
+                        @Html.ActionLink("Logout", "Logout", "Home", null, new { @class = "btnLogout"})
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Login", "Login", "Home", null, new { @class = "btnLogin" })
+                        @Html.ActionLink("Sign-Up", "Create", "Home", null, new { @class = "btnSignUp" })
+                    }
+                    
+                </ul>   
             </div>
             <div class="toggle_btn">
                 <i class="fa-solid fa-bars"></i>
