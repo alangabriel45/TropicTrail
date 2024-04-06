@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TropicTrailModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Reservation">
+    <Key>
+      <PropertyRef Name="reservation_Id" />
+    </Key>
+    <Property Name="reservation_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="date_In" Type="datetime" />
+    <Property Name="date_Out" Type="datetime" />
+    <Property Name="service_Id" Type="int" />
+    <Property Name="booked_By" Type="int" />
+    <Property Name="payment" Type="nvarchar" MaxLength="100" />
+    <Property Name="status" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="roleId" />
+    </Key>
+    <Property Name="roleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="roleName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Services">
+    <Key>
+      <PropertyRef Name="service_Id" />
+    </Key>
+    <Property Name="service_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tourType_Id" Type="int" />
+    <Property Name="service_Description" Type="nvarchar" MaxLength="255" />
+    <Property Name="max_Guest" Type="nvarchar" MaxLength="100" />
+    <Property Name="service_Price" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Tour_Type">
+    <Key>
+      <PropertyRef Name="tbType_Id" />
+    </Key>
+    <Property Name="tbType_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tbType_Name" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userFName" Type="nvarchar" MaxLength="100" />
+    <Property Name="userLName" Type="nvarchar" MaxLength="100" />
+    <Property Name="userAddress" Type="nvarchar" MaxLength="100" />
+    <Property Name="userEmail" Type="nvarchar" MaxLength="100" />
+    <Property Name="userPhone" Type="nvarchar" MaxLength="100" />
+    <Property Name="userName" Type="nvarchar" MaxLength="100" />
+    <Property Name="userPass" Type="nvarchar" MaxLength="100" />
+    <Property Name="userRole" Type="int" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="userRoleId" />
+    </Key>
+    <Property Name="userRoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" />
+    <Property Name="userRole" Type="int" />
+  </EntityType>
+  <Association Name="FK_Reservation_Services">
+    <End Role="Services" Type="Self.Services" Multiplicity="0..1" />
+    <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Services">
+        <PropertyRef Name="service_Id" />
+      </Principal>
+      <Dependent Role="Reservation">
+        <PropertyRef Name="service_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reservation_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Reservation">
+        <PropertyRef Name="booked_By" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Services_Tour_Type">
+    <End Role="Tour_Type" Type="Self.Tour_Type" Multiplicity="0..1" />
+    <End Role="Services" Type="Self.Services" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tour_Type">
+        <PropertyRef Name="tbType_Id" />
+      </Principal>
+      <Dependent Role="Services">
+        <PropertyRef Name="tourType_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="roleId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="userRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="roleId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="userRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TropicTrailModelStoreContainer">
+    <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tour_Type" EntityType="Self.Tour_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Reservation_Services" Association="Self.FK_Reservation_Services">
+      <End Role="Services" EntitySet="Services" />
+      <End Role="Reservation" EntitySet="Reservation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reservation_User" Association="Self.FK_Reservation_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Reservation" EntitySet="Reservation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Services_Tour_Type" Association="Self.FK_Services_Tour_Type">
+      <End Role="Tour_Type" EntitySet="Tour_Type" />
+      <End Role="Services" EntitySet="Services" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
