@@ -1,0 +1,75 @@
+﻿@model IEnumerable<TropicTrail.sp_Service_Result>
+
+@{
+    ViewBag.Title = "BookNow";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="content-table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Service_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tour_Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Max_Guest)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead> 
+
+@foreach (var item in Model) {
+    <tr class="clickable-row" data-service-id="@item.Service_Id">
+        <td>
+            @Html.DisplayFor(modelItem => item.Service_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tour_Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Max_Guest)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+    </tr>
+}
+</table>
+<br />
+Service Id
+<br />
+<input type="text" id="serviceIdTextBox" />
+<br />
+Time In
+<br />
+<input type="datetime-local" id="datetimeIn" name="datetimeIn">
+<br />
+Time Out
+<br />
+<input type="datetime-local" id="datetimeOut" name="datetimeOut">
+<br />
+Last Name
+<br />
+<input type="text" id="serviceIdTextBox" />
+<br />
+First Name
+<br />
+<input type="text" id="serviceIdTextBox" />
+<br />
+Payment
+<br />
+<input type="text" id="serviceIdTextBox" />
+<br />
+<input type="submit" value="Book" class="btn btn-default" />

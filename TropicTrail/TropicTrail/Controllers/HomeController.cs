@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -72,6 +73,16 @@ namespace TropicTrail.Controllers
         public ActionResult Contact()
         {
             return View();
+        }
+        public ActionResult Book()
+        {
+            return View();
+        }
+        public ActionResult BookNow(int id)
+        {
+            var services = _db.sp_Service(id).ToList();
+
+            return View(services);
         }
     }
 }

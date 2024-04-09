@@ -126,6 +126,7 @@
   <ItemGroup>
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\style.min.css" />
+    <Content Include="Content\css\styles.css" />
     <Content Include="Content\img\about-1.jpg" />
     <Content Include="Content\img\about-2.jpg" />
     <Content Include="Content\img\blog-1.jpg" />
@@ -136,6 +137,7 @@
     <Content Include="Content\img\class-3.jpg" />
     <Content Include="Content\img\detail.jpg" />
     <Content Include="Content\img\header.png" />
+    <Content Include="Content\img\island_hopping.jpg" />
     <Content Include="Content\img\portfolio-1.jpg" />
     <Content Include="Content\img\portfolio-2.jpg" />
     <Content Include="Content\img\portfolio-3.jpg" />
@@ -356,6 +358,9 @@
     <Compile Include="Services.cs">
       <DependentUpon>ModelTropicTrail.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_Service_Result.cs">
+      <DependentUpon>ModelTropicTrail.tt</DependentUpon>
+    </Compile>
     <Compile Include="Tour_Type.cs">
       <DependentUpon>ModelTropicTrail.tt</DependentUpon>
     </Compile>
@@ -379,6 +384,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Home\Book.cshtml" />
+    <Content Include="Views\Home\BookNow.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

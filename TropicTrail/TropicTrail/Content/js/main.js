@@ -100,3 +100,13 @@
     
 })(jQuery);
 
+document.addEventListener("DOMContentLoaded", function () {
+    var rows = document.querySelectorAll(".clickable-row");
+    rows.forEach(function (row) {
+        row.addEventListener("click", function () {
+            var serviceId = this.getAttribute("data-service-id");
+            document.getElementById("serviceIdTextBox").value = serviceId;
+        });
+    });
+});
+
