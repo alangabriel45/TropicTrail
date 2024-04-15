@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿ <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -40,13 +40,23 @@
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">            
                 <div class="navbar-nav font-weight-bold mx-auto py-0">
-                    <a href="~/Home/Index" class="nav-item nav-link active">Home</a>
-                    <a href="~/Home/HotDeals" class="nav-item nav-link">Hot Deals</a>
-                    <a href="~/Home/Offers" class="nav-item nav-link">Offers</a>
-                    <a href="~/Home/About" class="nav-item nav-link">About</a>
-                    <a href="~/Home/Contact" class="nav-item nav-link">Contact</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a href="~/Admin/Index" class="nav-item nav-link active">Home</a>
+                        <a href="~/Admin/Index" class="nav-item nav-link active">Manage Users</a>
+                        <a href="~/Admin/HotDeals" class="nav-item nav-link">Manage Tour</a>
+                        <a href="~/Admin/Offers" class="nav-item nav-link">Manage Reservation</a>
+                    }
+                    else
+                    {
+                        <a href="~/Home/Index" class="nav-item nav-link active">Home</a>
+                        <a href="~/Home/HotDeals" class="nav-item nav-link">Hot Deals</a>
+                        <a href="~/Home/Offers" class="nav-item nav-link">Offers</a>
+                        <a href="~/Home/About" class="nav-item nav-link">About</a>
+                        <a href="~/Home/Contact" class="nav-item nav-link">Contact</a>
+                    }  
                 </div>
                 @if (User.Identity.IsAuthenticated)
                 {

@@ -5,10 +5,12 @@
       <PropertyRef Name="reservation_Id" />
     </Key>
     <Property Name="reservation_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="bookedBy" Type="int" />
     <Property Name="date_In" Type="datetime" />
     <Property Name="date_Out" Type="datetime" />
     <Property Name="service_Id" Type="int" />
-    <Property Name="booked_By" Type="int" />
+    <Property Name="lName" Type="nvarchar" MaxLength="255" />
+    <Property Name="fName" Type="nvarchar" MaxLength="255" />
     <Property Name="payment" Type="nvarchar" MaxLength="100" />
     <Property Name="status" Type="nvarchar" MaxLength="100" />
   </EntityType>
@@ -40,7 +42,7 @@
     <Key>
       <PropertyRef Name="userId" />
     </Key>
-    <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
     <Property Name="userFName" Type="nvarchar" MaxLength="100" />
     <Property Name="userLName" Type="nvarchar" MaxLength="100" />
     <Property Name="userAddress" Type="nvarchar" MaxLength="100" />
@@ -58,7 +60,17 @@
     <Property Name="userId" Type="int" />
     <Property Name="userRole" Type="int" />
   </EntityType>
-  <Association Name="FK_Reservation_Services">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'TropicTrail.dbo.vw_UserRole' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_UserRole">
+    <Key>
+      <PropertyRef Name="userRoleId" />
+    </Key>
+    <Property Name="userRoleId" Type="int" Nullable="false" />
+    <Property Name="userName" Type="nvarchar" MaxLength="100" />
+    <Property Name="roleName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_Reservation_Services1">
     <End Role="Services" Type="Self.Services" Multiplicity="0..1" />
     <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
     <ReferentialConstraint>
@@ -70,7 +82,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Reservation_User">
+  <Association Name="FK_Reservation_User1">
     <End Role="User" Type="Self.User" Multiplicity="0..1" />
     <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
     <ReferentialConstraint>
@@ -78,7 +90,7 @@
         <PropertyRef Name="userId" />
       </Principal>
       <Dependent Role="Reservation">
-        <PropertyRef Name="booked_By" />
+        <PropertyRef Name="bookedBy" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -106,7 +118,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UserRole_Role">
+  <Association Name="FK_UserRole_Role1">
     <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
     <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
     <ReferentialConstraint>
@@ -118,7 +130,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UserRole_User">
+  <Association Name="FK_UserRole_User1">
     <End Role="User" Type="Self.User" Multiplicity="0..1" />
     <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
     <ReferentialConstraint>
@@ -130,7 +142,17 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Function Name="sp_Service" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+  <Function Name="sp_Reservation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="bookedBy" Type="int" Mode="In" />
+    <Parameter Name="dateIn" Type="datetime" Mode="In" />
+    <Parameter Name="dateOut" Type="datetime" Mode="In" />
+    <Parameter Name="sId" Type="int" Mode="In" />
+    <Parameter Name="lName" Type="nvarchar" Mode="In" />
+    <Parameter Name="fName" Type="nvarchar" Mode="In" />
+    <Parameter Name="pay" Type="nvarchar" Mode="In" />
+    <Parameter Name="status" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_Services" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="id" Type="int" Mode="In" />
   </Function>
   <EntityContainer Name="TropicTrailModelStoreContainer">
@@ -140,11 +162,18 @@
     <EntitySet Name="Tour_Type" EntityType="Self.Tour_Type" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_Reservation_Services" Association="Self.FK_Reservation_Services">
+    <EntitySet Name="vw_UserRole" EntityType="Self.vw_UserRole" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[vw_UserRole].[userRoleId] AS [userRoleId], 
+[vw_UserRole].[userName] AS [userName], 
+[vw_UserRole].[roleName] AS [roleName]
+FROM [dbo].[vw_UserRole] AS [vw_UserRole]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Reservation_Services1" Association="Self.FK_Reservation_Services1">
       <End Role="Services" EntitySet="Services" />
       <End Role="Reservation" EntitySet="Reservation" />
     </AssociationSet>
-    <AssociationSet Name="FK_Reservation_User" Association="Self.FK_Reservation_User">
+    <AssociationSet Name="FK_Reservation_User1" Association="Self.FK_Reservation_User1">
       <End Role="User" EntitySet="User" />
       <End Role="Reservation" EntitySet="Reservation" />
     </AssociationSet>
@@ -156,11 +185,11 @@
       <End Role="Role" EntitySet="Role" />
       <End Role="User" EntitySet="User" />
     </AssociationSet>
-    <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
+    <AssociationSet Name="FK_UserRole_Role1" Association="Self.FK_UserRole_Role1">
       <End Role="Role" EntitySet="Role" />
       <End Role="UserRole" EntitySet="UserRole" />
     </AssociationSet>
-    <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
+    <AssociationSet Name="FK_UserRole_User1" Association="Self.FK_UserRole_User1">
       <End Role="User" EntitySet="User" />
       <End Role="UserRole" EntitySet="UserRole" />
     </AssociationSet>

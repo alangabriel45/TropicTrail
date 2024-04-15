@@ -8,7 +8,7 @@ using System.Web.Security;
 
 namespace TropicTrail.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "User, Admin")]
     public class HomeController : BaseController
     {
         // GET: Home
@@ -29,7 +29,7 @@ namespace TropicTrail.Controllers
         public ActionResult Login(User u)
         {
             var user = _userRepo.Table().Where(m => m.userName == u.userName).FirstOrDefault();
-            if (user != null)
+            if (user != null && user.userPass == u.userPass)
             {
                 FormsAuthentication.SetAuthCookie(u.userName, false);
                 return RedirectToAction("Index");
@@ -39,6 +39,7 @@ namespace TropicTrail.Controllers
 
             return View(u);
         }
+        [Authorize(Roles = "User, Admin")]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
@@ -80,9 +81,41 @@ namespace TropicTrail.Controllers
         }
         public ActionResult BookNow(int id)
         {
-            var services = _db.sp_Service(id).ToList();
+            var services = _db.sp_Services(id).ToList();
 
             return View(services);
+        }
+        [HttpPost]
+        public ActionResult BookNow(DateTime dIn, DateTime dOut, int serviceIdTextBox, String lName, String fName, String pay)
+        {
+            string status = "Pending";
+
+            // Get the username of the currently logged-in user
+            string userName = User.Identity.Name;
+
+            // Retrieve the user from the repository using the username
+            var user = _userRepo.Table().Where(m => m.userName == userName).FirstOrDefault();
+
+            // Check if the user is found
+            if (user != null)
+            {
+                // Use the ID of the logged-in user for booking
+                int bookedBy = user.userId;
+
+                // Call the stored procedure to make a reservation
+                var reservation = _db.sp_Reservation(bookedBy, dIn, dOut, serviceIdTextBox, lName, fName, pay, status);
+
+                // Save changes to the database
+                _db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
+            // Handle case when user is not found
+            ModelState.AddModelError("", "User not found!");
+
+            // Redirect to appropriate action or view
+            return RedirectToAction("Index");
         }
     }
 }

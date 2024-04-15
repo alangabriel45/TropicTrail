@@ -1,13 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="TropicTrailModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="TropicTrailEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="sp_Reservations">
+      <Parameter Name="dateIn" Mode="In" Type="DateTime" />
+      <Parameter Name="dateOut" Mode="In" Type="DateTime" />
+      <Parameter Name="sId" Mode="In" Type="Int32" />
+      <Parameter Name="bookedBy" Mode="In" Type="Int32" />
+      <Parameter Name="pay" Mode="In" Type="String" />
+      <Parameter Name="status" Mode="In" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="sp_Services" ReturnType="Collection(TropicTrailModel.sp_Services_Result)">
-      <Parameter Name="id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_Servicess" ReturnType="Collection(TropicTrailModel.sp_Servicess_Result)">
-      <Parameter Name="id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_Servicesss" ReturnType="Collection(TropicTrailModel.sp_Servicesss_Result)">
       <Parameter Name="id" Mode="In" Type="Int32" />
     </FunctionImport>
     <EntitySet Name="Reservation" EntityType="TropicTrailModel.Reservation" />
@@ -16,11 +18,12 @@
     <EntitySet Name="Tour_Type" EntityType="TropicTrailModel.Tour_Type" />
     <EntitySet Name="User" EntityType="TropicTrailModel.User" />
     <EntitySet Name="UserRole" EntityType="TropicTrailModel.UserRole" />
-    <AssociationSet Name="FK_Reservation_Services" Association="TropicTrailModel.FK_Reservation_Services">
+    <EntitySet Name="vw_UserRole" EntityType="TropicTrailModel.vw_UserRole" />
+    <AssociationSet Name="FK_Reservation_Services1" Association="TropicTrailModel.FK_Reservation_Services1">
       <End Role="Services" EntitySet="Services" />
       <End Role="Reservation" EntitySet="Reservation" />
     </AssociationSet>
-    <AssociationSet Name="FK_Reservation_User" Association="TropicTrailModel.FK_Reservation_User">
+    <AssociationSet Name="FK_Reservation_User1" Association="TropicTrailModel.FK_Reservation_User1">
       <End Role="User" EntitySet="User" />
       <End Role="Reservation" EntitySet="Reservation" />
     </AssociationSet>
@@ -28,7 +31,7 @@
       <End Role="Role" EntitySet="Role" />
       <End Role="User" EntitySet="User" />
     </AssociationSet>
-    <AssociationSet Name="FK_UserRole_Role" Association="TropicTrailModel.FK_UserRole_Role">
+    <AssociationSet Name="FK_UserRole_Role1" Association="TropicTrailModel.FK_UserRole_Role1">
       <End Role="Role" EntitySet="Role" />
       <End Role="UserRole" EntitySet="UserRole" />
     </AssociationSet>
@@ -36,27 +39,23 @@
       <End Role="Tour_Type" EntitySet="Tour_Type" />
       <End Role="Services" EntitySet="Services" />
     </AssociationSet>
-    <AssociationSet Name="FK_UserRole_User" Association="TropicTrailModel.FK_UserRole_User">
+    <AssociationSet Name="FK_UserRole_User1" Association="TropicTrailModel.FK_UserRole_User1">
       <End Role="User" EntitySet="User" />
       <End Role="UserRole" EntitySet="UserRole" />
     </AssociationSet>
-    <FunctionImport Name="sp_Service" ReturnType="Collection(TropicTrailModel.sp_Service_Result)">
-      <Parameter Name="id" Mode="In" Type="Int32" />
+    <FunctionImport Name="sp_Reservation">
+      <Parameter Name="bookedBy" Mode="In" Type="Int32" />
+      <Parameter Name="dateIn" Mode="In" Type="DateTime" />
+      <Parameter Name="dateOut" Mode="In" Type="DateTime" />
+      <Parameter Name="sId" Mode="In" Type="Int32" />
+      <Parameter Name="lName" Mode="In" Type="String" />
+      <Parameter Name="fName" Mode="In" Type="String" />
+      <Parameter Name="pay" Mode="In" Type="String" />
+      <Parameter Name="status" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="sp_Services_Result">
-    <Property Type="String" Name="Tour_Type" Nullable="true" MaxLength="100" />
-    <Property Type="String" Name="Description" Nullable="true" MaxLength="255" />
-    <Property Type="String" Name="Max_Guest" Nullable="true" MaxLength="100" />
-    <Property Type="String" Name="Price" Nullable="true" MaxLength="100" />
-  </ComplexType>
-  <ComplexType Name="sp_Servicess_Result">
-    <Property Type="String" Name="Tour_Type" Nullable="true" MaxLength="100" />
-    <Property Type="String" Name="Description" Nullable="true" MaxLength="255" />
-    <Property Type="String" Name="Max_Guest" Nullable="true" MaxLength="100" />
-    <Property Type="String" Name="Price" Nullable="true" MaxLength="100" />
-  </ComplexType>
-  <ComplexType Name="sp_Servicesss_Result">
+    <Property Type="Int32" Name="Service_Id" Nullable="false" />
     <Property Type="String" Name="Tour_Type" Nullable="true" MaxLength="100" />
     <Property Type="String" Name="Description" Nullable="true" MaxLength="255" />
     <Property Type="String" Name="Max_Guest" Nullable="true" MaxLength="100" />
@@ -67,14 +66,16 @@
       <PropertyRef Name="reservation_Id" />
     </Key>
     <Property Name="reservation_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="bookedBy" Type="Int32" />
     <Property Name="date_In" Type="DateTime" Precision="3" />
     <Property Name="date_Out" Type="DateTime" Precision="3" />
     <Property Name="service_Id" Type="Int32" />
-    <Property Name="booked_By" Type="Int32" />
+    <Property Name="lName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="fName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="payment" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Services" Relationship="TropicTrailModel.FK_Reservation_Services" FromRole="Reservation" ToRole="Services" />
-    <NavigationProperty Name="User" Relationship="TropicTrailModel.FK_Reservation_User" FromRole="Reservation" ToRole="User" />
+    <NavigationProperty Name="Services" Relationship="TropicTrailModel.FK_Reservation_Services1" FromRole="Reservation" ToRole="Services" />
+    <NavigationProperty Name="User" Relationship="TropicTrailModel.FK_Reservation_User1" FromRole="Reservation" ToRole="User" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -83,7 +84,7 @@
     <Property Name="roleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="roleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="User" Relationship="TropicTrailModel.FK_User_Role" FromRole="Role" ToRole="User" />
-    <NavigationProperty Name="UserRole" Relationship="TropicTrailModel.FK_UserRole_Role" FromRole="Role" ToRole="UserRole" />
+    <NavigationProperty Name="UserRole" Relationship="TropicTrailModel.FK_UserRole_Role1" FromRole="Role" ToRole="UserRole" />
   </EntityType>
   <EntityType Name="Services">
     <Key>
@@ -94,7 +95,7 @@
     <Property Name="service_Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="max_Guest" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="service_Price" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Reservation" Relationship="TropicTrailModel.FK_Reservation_Services" FromRole="Services" ToRole="Reservation" />
+    <NavigationProperty Name="Reservation" Relationship="TropicTrailModel.FK_Reservation_Services1" FromRole="Services" ToRole="Reservation" />
     <NavigationProperty Name="Tour_Type" Relationship="TropicTrailModel.FK_Services_Tour_Type" FromRole="Services" ToRole="Tour_Type" />
   </EntityType>
   <EntityType Name="Tour_Type">
@@ -109,7 +110,7 @@
     <Key>
       <PropertyRef Name="userId" />
     </Key>
-    <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
     <Property Name="userFName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="userLName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="userAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -118,9 +119,9 @@
     <Property Name="userName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="userPass" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="userRole" Type="Int32" />
-    <NavigationProperty Name="Reservation" Relationship="TropicTrailModel.FK_Reservation_User" FromRole="User" ToRole="Reservation" />
+    <NavigationProperty Name="Reservation" Relationship="TropicTrailModel.FK_Reservation_User1" FromRole="User" ToRole="Reservation" />
     <NavigationProperty Name="Role" Relationship="TropicTrailModel.FK_User_Role" FromRole="User" ToRole="Role" />
-    <NavigationProperty Name="UserRole1" Relationship="TropicTrailModel.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
+    <NavigationProperty Name="UserRole1" Relationship="TropicTrailModel.FK_UserRole_User1" FromRole="User" ToRole="UserRole" />
   </EntityType>
   <EntityType Name="UserRole">
     <Key>
@@ -129,10 +130,18 @@
     <Property Name="userRoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="userId" Type="Int32" />
     <Property Name="userRole1" Type="Int32" />
-    <NavigationProperty Name="Role" Relationship="TropicTrailModel.FK_UserRole_Role" FromRole="UserRole" ToRole="Role" />
-    <NavigationProperty Name="User" Relationship="TropicTrailModel.FK_UserRole_User" FromRole="UserRole" ToRole="User" />
+    <NavigationProperty Name="Role" Relationship="TropicTrailModel.FK_UserRole_Role1" FromRole="UserRole" ToRole="Role" />
+    <NavigationProperty Name="User" Relationship="TropicTrailModel.FK_UserRole_User1" FromRole="UserRole" ToRole="User" />
   </EntityType>
-  <Association Name="FK_Reservation_Services">
+  <EntityType Name="vw_UserRole">
+    <Key>
+      <PropertyRef Name="userRoleId" />
+    </Key>
+    <Property Name="userRoleId" Type="Int32" Nullable="false" />
+    <Property Name="userName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="roleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_Reservation_Services1">
     <End Type="TropicTrailModel.Services" Role="Services" Multiplicity="0..1" />
     <End Type="TropicTrailModel.Reservation" Role="Reservation" Multiplicity="*" />
     <ReferentialConstraint>
@@ -144,7 +153,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Reservation_User">
+  <Association Name="FK_Reservation_User1">
     <End Type="TropicTrailModel.User" Role="User" Multiplicity="0..1" />
     <End Type="TropicTrailModel.Reservation" Role="Reservation" Multiplicity="*" />
     <ReferentialConstraint>
@@ -152,7 +161,7 @@
         <PropertyRef Name="userId" />
       </Principal>
       <Dependent Role="Reservation">
-        <PropertyRef Name="booked_By" />
+        <PropertyRef Name="bookedBy" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -168,7 +177,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UserRole_Role">
+  <Association Name="FK_UserRole_Role1">
     <End Type="TropicTrailModel.Role" Role="Role" Multiplicity="0..1" />
     <End Type="TropicTrailModel.UserRole" Role="UserRole" Multiplicity="*" />
     <ReferentialConstraint>
@@ -192,7 +201,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UserRole_User">
+  <Association Name="FK_UserRole_User1">
     <End Type="TropicTrailModel.User" Role="User" Multiplicity="0..1" />
     <End Type="TropicTrailModel.UserRole" Role="UserRole" Multiplicity="*" />
     <ReferentialConstraint>
@@ -204,11 +213,4 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <ComplexType Name="sp_Service_Result">
-    <Property Type="Int32" Name="Service_Id" Nullable="false" />
-    <Property Type="String" Name="Tour_Type" Nullable="true" MaxLength="100" />
-    <Property Type="String" Name="Description" Nullable="true" MaxLength="255" />
-    <Property Type="String" Name="Max_Guest" Nullable="true" MaxLength="100" />
-    <Property Type="String" Name="Price" Nullable="true" MaxLength="100" />
-  </ComplexType>
 </Schema>

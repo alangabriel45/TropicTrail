@@ -1,15 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="TropicTrailModelStoreContainer" CdmEntityContainer="TropicTrailEntities">
+    <FunctionImportMapping FunctionImportName="sp_Services" FunctionName="TropicTrailModel.Store.sp_Services">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TropicTrailModel.sp_Services_Result">
+          <ScalarProperty Name="Service_Id" ColumnName="Service_Id" />
+          <ScalarProperty Name="Tour_Type" ColumnName="Tour_Type" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Max_Guest" ColumnName="Max_Guest" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <EntitySetMapping Name="Reservation">
       <EntityTypeMapping TypeName="TropicTrailModel.Reservation">
         <MappingFragment StoreEntitySet="Reservation">
           <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="payment" ColumnName="payment" />
-          <ScalarProperty Name="booked_By" ColumnName="booked_By" />
+          <ScalarProperty Name="fName" ColumnName="fName" />
+          <ScalarProperty Name="lName" ColumnName="lName" />
           <ScalarProperty Name="service_Id" ColumnName="service_Id" />
           <ScalarProperty Name="date_Out" ColumnName="date_Out" />
           <ScalarProperty Name="date_In" ColumnName="date_In" />
+          <ScalarProperty Name="bookedBy" ColumnName="bookedBy" />
           <ScalarProperty Name="reservation_Id" ColumnName="reservation_Id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -65,16 +78,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="sp_Service" FunctionName="TropicTrailModel.Store.sp_Service">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="TropicTrailModel.sp_Service_Result">
-          <ScalarProperty Name="Service_Id" ColumnName="Service_Id" />
-          <ScalarProperty Name="Tour_Type" ColumnName="Tour_Type" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="Max_Guest" ColumnName="Max_Guest" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
+    <EntitySetMapping Name="vw_UserRole">
+      <EntityTypeMapping TypeName="TropicTrailModel.vw_UserRole">
+        <MappingFragment StoreEntitySet="vw_UserRole">
+          <ScalarProperty Name="roleName" ColumnName="roleName" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="userRoleId" ColumnName="userRoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_Reservation" FunctionName="TropicTrailModel.Store.sp_Reservation" />
   </EntityContainerMapping>
 </Mapping>
