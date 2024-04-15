@@ -1,0 +1,81 @@
+﻿@model IEnumerable<TropicTrail.sp_Services_Result>
+
+@{
+    ViewBag.Title = "BookNow";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/js/main.js"></script>
+
+<table class="content-table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Service_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tour_Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Max_Guest)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr class="clickable-row" data-service-id="@item.Service_Id">
+            <td>
+                @Html.DisplayFor(modelItem => item.Service_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tour_Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Max_Guest)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+        </tr>
+    }
+</table>
+<form action="@Url.Action("BookNow", "Home")" method="post">
+    <br />
+    <label for="dIn">Check-in Date:</label>
+    <br />
+    <input type="datetime-local" id="dIn" name="dIn" required>
+    <br />
+    <label for="dOut">Check-out Date:</label>
+    <br />
+    <input type="datetime-local" id="dOut" name="dOut" required>
+    <br />
+    <label for="serviceIdTextBox">Service ID:</label>
+    <br />
+    <input type="text" id="serviceIdTextBox" name="serviceIdTextBox" required>
+    <br />
+    <label for="lName">Last Name:</label>
+    <br />
+    <input type="text" id="lName" name="lName" required>
+    <br />
+    <label for="fname">First Name:</label>
+    <br />
+    <input type="text" id="fName" name="fName" required>
+    <br />
+    <label for="pay">Payment Information:</label>
+    <br />
+    <input type="text" id="pay" name="pay" required>
+    <br />
+    <br />
+    <button type="submit">Book Now</button>
+</form>

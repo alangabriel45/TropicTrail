@@ -15,10 +15,12 @@ namespace TropicTrail
     public partial class Reservation
     {
         public int reservation_Id { get; set; }
+        public Nullable<int> bookedBy { get; set; }
         public Nullable<System.DateTime> date_In { get; set; }
         public Nullable<System.DateTime> date_Out { get; set; }
         public Nullable<int> service_Id { get; set; }
-        public Nullable<int> booked_By { get; set; }
+        public string lName { get; set; }
+        public string fName { get; set; }
         public string payment { get; set; }
         public string status { get; set; }
     

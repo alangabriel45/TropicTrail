@@ -4,19 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8326be8f79c842c1949bc19c31c737c5" Name="Diagram1">
-        <EntityTypeShape EntityType="TropicTrailModel.Reservation" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TropicTrailModel.Role" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="TropicTrailModel.Services" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TropicTrailModel.Tour_Type" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="TropicTrailModel.User" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TropicTrailModel.UserRole" Width="1.5" PointX="8.25" PointY="2.875" IsExpanded="true" />
-        <AssociationConnector Association="TropicTrailModel.FK_Reservation_Services" ManuallyRouted="false" />
-        <AssociationConnector Association="TropicTrailModel.FK_Reservation_User" ManuallyRouted="false" />
-        <AssociationConnector Association="TropicTrailModel.FK_User_Role" ManuallyRouted="false" />
-        <AssociationConnector Association="TropicTrailModel.FK_UserRole_Role" ManuallyRouted="false" />
-        <AssociationConnector Association="TropicTrailModel.FK_Services_Tour_Type" ManuallyRouted="false" />
-        <AssociationConnector Association="TropicTrailModel.FK_UserRole_User" ManuallyRouted="false" />
+      <Diagram DiagramId="70c0bc8264bb4aeaabd3a2cb84428229" Name="Diagram1">
+        <EntityTypeShape EntityType="TropicTrailModel.Reservation" Width="1.5" PointX="5.25" PointY="4.375" />
+        <EntityTypeShape EntityType="TropicTrailModel.Role" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="TropicTrailModel.Services" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="TropicTrailModel.Tour_Type" Width="1.5" PointX="0.75" PointY="2.25" />
+        <EntityTypeShape EntityType="TropicTrailModel.User" Width="1.5" PointX="3" PointY="4.25" />
+        <EntityTypeShape EntityType="TropicTrailModel.UserRole" Width="1.5" PointX="8.25" PointY="5" />
+        <EntityTypeShape EntityType="TropicTrailModel.vw_UserRole" Width="1.5" PointX="2.75" PointY="8.625" />
+        <AssociationConnector Association="TropicTrailModel.FK_Reservation_Services1" />
+        <AssociationConnector Association="TropicTrailModel.FK_Reservation_User1" />
+        <AssociationConnector Association="TropicTrailModel.FK_User_Role" />
+        <AssociationConnector Association="TropicTrailModel.FK_UserRole_Role1" />
+        <AssociationConnector Association="TropicTrailModel.FK_Services_Tour_Type" />
+        <AssociationConnector Association="TropicTrailModel.FK_UserRole_User1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
